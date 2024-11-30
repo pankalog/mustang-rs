@@ -3,9 +3,13 @@ name = "Mustang"
 description = "A simple, blazing-fast URL shortener made using Redis and Axum."
 version = "1.0.0"
 edition = "2021"
-authors = ["Panos Kalogeropoulos <p at pkal dot dev>"]
-homepage = "github.com/pankalog/mustang-rs <>"
+authors = ["Panos Kalogeropoulos"]
+homepage = "github.com/pankalog/mustang-rs"
 
+[tasks.build]
+description = "Build the project"
+command = "cargo"
+args = ["build"]
 [dependencies]
 serde = { version = "1.0.215", features = ["derive"] }
 rand = "0.8"

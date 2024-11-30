@@ -1,0 +1,67 @@
+openapi: 3.1.0
+info:
+  title: Mustang
+  description: A simple, blazing-fast URL shortener made using Redis and Axum.
+  contact:
+    name: Panos Kalogeropoulos
+  license:
+    name: ''
+  version: 1.0.0
+paths:
+  /:
+    post:
+      tags: []
+      operationId: add_entry
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShortenerCreationRequest'
+        required: true
+      responses:
+        '200':
+          description: Shortened URL created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShortenerCreationResponse'
+        '500':
+          description: Failed to create shortened URL
+  /{shortened_id}:
+    get:
+      tags: []
+      operationId: get_link
+      parameters:
+        - name: shortened_id
+          in: path
+          description: Shortened ID that corresponds to a link
+          required: true
+          schema:
+            type: string
+      responses:
+        '307':
+          description: Redirect to found link
+        '404':
+          description: Supplied shortened ID was not found
+components:
+  schemas:
+    ShortenerCreationRequest:
+      type: object
+      required:
+        - destination_url
+      properties:
+        destination_url:
+          type: string
+    ShortenerCreationResponse:
+      type: object
+      required:
+        - short_id
+        - full_url
+        - destination_url
+      properties:
+        destination_url:
+          type: string
+        full_url:
+          type: string
+        short_id:
+          type: string
