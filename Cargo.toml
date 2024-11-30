@@ -6,10 +6,6 @@ edition = "2021"
 authors = ["Panos Kalogeropoulos"]
 homepage = "github.com/pankalog/mustang-rs"
 
-[tasks.build]
-description = "Build the project"
-command = "cargo"
-args = ["build"]
 [dependencies]
 serde = { version = "1.0.215", features = ["derive"] }
 rand = "0.8"

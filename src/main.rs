@@ -1,19 +1,19 @@
-use std::env;
+use axum::response::IntoResponse;
 use axum::{
-    routing::{get, post},
     extract::{Path, State},
     http::StatusCode,
     response::Redirect,
     routing::Router,
+    routing::{get, post},
     Json,
 };
 use rand::distributions::Alphanumeric;
 use rand::{thread_rng, Rng};
 use redis::{Client, Commands, RedisError, RedisResult};
 use serde::{Deserialize, Serialize};
+use std::env;
 use std::net::{IpAddr, SocketAddr};
 use std::sync::Arc;
-use axum::response::IntoResponse;
 use tokio::sync::Mutex;
 use utoipa::{OpenApi, ToSchema};
 
@@ -68,9 +68,9 @@ async fn get_link(
 )]
 async fn add_entry(
     State(state): State<AppState>,
+    axum::extract::Host(host): axum::extract::Host,
     Json(shortener_req): Json<ShortenerCreationRequest>,
 ) -> Result<Json<ShortenerCreationResponse>, (StatusCode, String)> {
-    let host = "http://localhost:8080"; // Replace with actual host if needed
 
     let res = create_shortened_url(state.redis_client.clone(), shortener_req).await;
 
